@@ -6,7 +6,7 @@ services:
     image: harbor.dgstg.org/ocnandi/ocnandi-web:${TAG}
     restart: always
     ports:
-      - "80:80"ok
+      - "80:80"
     depends_on:
         - app
 
