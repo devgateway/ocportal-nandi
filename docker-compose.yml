@@ -2,13 +2,19 @@ version: '3.8'
 
 services:
 
+  web:
+    image: harbor.dgstg.org/ocnandi/ocnandi-web:${TAG}
+    restart: always
+    ports:
+      - "80:80"ok
+    depends_on:
+        - app
+
   app:
-    image: ocportal-nandi/admin/prod:${TAG-local}
+    image: harbor.dgstg.org/ocnandi/ocnandi-app:${TAG}
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway" #required so docker connects to host interface (this is for sending emails)
-    build:
-        target: prod
     depends_on:
       - db
       - mongo

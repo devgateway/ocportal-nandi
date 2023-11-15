@@ -3,8 +3,6 @@ name: Docker Image CI
 on:
   push:
     branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
 
 jobs:
 
@@ -13,6 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker compose build
+      - uses: docker/login-action@v1
+        with:
+          registry: harbor.dgstg.org
+          username: ${{ secrets.HARBOR_USERNAME  }}
+          password: ${{ secrets.HARBOR_PASSWORD }}
+
+      - uses: actions/checkout@v3
+      - name: BuildAndPushDockerImages
+        run: |
+          docker build ./ --target prod -t harbor.dgstg.org/ocnandi/ocnandi-app:develop
+          docker push harbor.dgstg.org/ocnandi/ocnandi-app:develop
+          docker build ./nginx -t harbor.dgstg.org/ocnandi/ocnandi-web:develop
+          docker push harbor.dgstg.org/ocnandi/ocnandi-web:develop
