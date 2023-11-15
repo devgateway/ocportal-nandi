@@ -2,8 +2,19 @@ version: '3.8'
 
 services:
 
+
+  web:
+    image: ocnandi/ocnandi-web:${TAG-local}
+    restart: 'no'
+    ports:
+      - "80:80"
+    build:
+      context: ./nginx
+    depends_on:
+      - app
+
   app:
-    image: ocportal-nandi/admin/dev:${TAG-local}
+    image: ocnandi/ocnandi-app:${TAG-local}
     restart: 'no'
     extra_hosts:
       - "host.docker.internal:host-gateway" #required so docker connects to host interface (this is for sending emails)
