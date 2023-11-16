@@ -27,7 +27,7 @@ services:
       - "8090:8090"
       - "8000:8000"
     env_file:
-      - .env
+      - .env_dev
     #entrypoint: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - ./forms/target/classes:/opt/app/forms/classes
@@ -44,7 +44,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - .env
+      - .env_dev
 
   mongo:
     image: mongo:4.2
@@ -55,7 +55,7 @@ services:
     ports:
       - "27017:27017"
     env_file:
-      - .env
+      - .env_dev
 
 #  pgbackups:
 #    image: prodrigestivill/postgres-backup-local
