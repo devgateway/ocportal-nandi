@@ -27,7 +27,7 @@ services:
     image: postgis/postgis:11-3.3
     restart: always
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - /efs/pgdata:/var/lib/postgresql/data
     env_file:
       - .env
 
@@ -36,7 +36,7 @@ services:
     restart: always
     command: [--auth]
     volumes:
-        - mongodata:/data/db
+        - /efs/mongodata:/data/db
     env_file:
       - .env
 
@@ -44,7 +44,7 @@ services:
     image: prodrigestivill/postgres-backup-local
     restart: always
     volumes:
-      - /opt/pgbackups:/backups
+      - /efs/pgbackups:/backups
     env_file:
       - .env
     depends_on:
@@ -59,7 +59,3 @@ services:
       - BACKUP_KEEP_WEEKS=12
       - BACKUP_KEEP_MONTHS=24
       - HEALTHCHECK_PORT=5432
-
-volumes:
-    pgdata:
-    mongodata:
