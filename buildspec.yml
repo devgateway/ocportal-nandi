@@ -1,0 +1,24 @@
+version: 0.2
+
+env:
+    parameter-store:
+        HARBOR_USERNAME_PARAM: /CodeBuild/HARBOR_USERNAME
+        HARBOR_PASSWORD_PARAM: /CodeBuild/HARBOR_PASSWORD
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo "$HARBOR_PASSWORD_PARAM" | docker login --username $HARBOR_USERNAME_PARAM --password-stdin harbor.dgstg.org
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build ./ --target prod -t harbor.dgstg.org/ocnandi/ocnandi-app:develop
+      - docker build ./nginx -t harbor.dgstg.org/ocnandi/ocnandi-web:develop  
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push harbor.dgstg.org/ocnandi/ocnandi-app:develop
+      - docker push harbor.dgstg.org/ocnandi/ocnandi-web:develop
