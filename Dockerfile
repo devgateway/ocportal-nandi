@@ -1,4 +1,4 @@
-FROM maven:3.8-openjdk-17 as compiler
+FROM public.ecr.aws/docker/library/maven:3.8-openjdk-17 as compiler
 WORKDIR /tmp/build
 RUN microdnf install zip
 COPY forms/pom.xml forms/pom.xml
@@ -22,7 +22,7 @@ RUN mkdir -p forms/target/deps \
     ( e=$? && if [ $e -ne 1 ]; then exit $e; fi ) \
     && rm -f ../*.*
 
-FROM openjdk:17-jdk-slim as prod
+FROM public.ecr.aws/docker/library/openjdk:17-jdk-slim as prod
 WORKDIR /opt/app
 RUN apt-get update && apt-get install -y fontconfig libfreetype6 && rm -rf /var/lib/apt/lists/*
 #we copy artifacts from exploded jar, one by one, each COPY command will create a separate docker layer
@@ -36,7 +36,7 @@ ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.12.0/wai
 RUN chmod +x /wait
 CMD /wait && /opt/app/entrypoint.sh admin
 
-FROM openjdk:17-jdk-slim as dev
+FROM public.ecr.aws/docker/library/openjdk:17-jdk-slim as dev
 WORKDIR /opt/app
 RUN apt-get update && apt-get install -y fontconfig libfreetype6 && rm -rf /var/lib/apt/lists/*
 COPY --from=compiler /tmp/build/forms/target/deps/BOOT-INF/lib lib
