@@ -1,7 +1,7 @@
 version: 0.2
 
 env:
-    parameter-store:
+    secrets-manager:
         HARBOR_USERNAME_PARAM: /CodeBuild/HARBOR_USERNAME
         HARBOR_PASSWORD_PARAM: /CodeBuild/HARBOR_PASSWORD
 
