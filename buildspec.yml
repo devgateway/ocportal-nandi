@@ -2,8 +2,8 @@ version: 0.2
 
 env:
     secrets-manager:
-        HARBOR_USERNAME_PARAM: /CodeBuild/HARBOR_USERNAME
-        HARBOR_PASSWORD_PARAM: /CodeBuild/HARBOR_PASSWORD
+        HARBOR_USERNAME_PARAM: harbor/staging/auth:HARBOR_USERNAME
+        HARBOR_PASSWORD_PARAM: harbor/staging/auth:HARBOR_PASSWORD
 
 phases:
   pre_build:
