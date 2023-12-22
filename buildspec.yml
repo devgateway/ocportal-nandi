@@ -1,6 +1,7 @@
 version: 0.2
 
 #this is not invoked from the file
+#it is pasted in codebuild, which has no source as input
 
 env:
     secrets-manager:
