@@ -1,5 +1,7 @@
 version: 0.2
 
+#this is not invoked from the file
+
 env:
     secrets-manager:
         HARBOR_USERNAME_PARAM: /CodeBuild/harbor/staging/auth:HARBOR_USERNAME
